@@ -6,7 +6,7 @@ export default function Create() {
   const [form, setForm] = useState({
     first_name: '',
     last_name: '',
-    middle_name: '',
+    middle_name: '', 
     position: '',
     level: '',
   });
