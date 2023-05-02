@@ -35,7 +35,7 @@ app.use('/', locationRouter);
 
 // connect to db
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect("mongodb://mongo-db/EmlpoyeesData")
   .then(() => {
     // listen for requests
     app.listen(process.env.PORT, () => {
