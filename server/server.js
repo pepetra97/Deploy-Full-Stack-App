@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const recordRoutes = require('./routes/recordRouter');
 const equipmentRoutes = require('./routes/equipmentRouter');
 const rewardRoutes = require('./routes/rewardRoutes');
+const locationRouter = require('./routes/locationRouter');
 
 const cors = require('cors');
 
@@ -18,7 +19,7 @@ app.use(
   })
 );
 
-// add middleware
+// middleware
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -30,8 +31,9 @@ app.use((req, res, next) => {
 app.use('/', recordRoutes);
 app.use('/', equipmentRoutes);
 app.use('/', rewardRoutes);
+app.use('/', locationRouter);
 
-// connect to db  
+// connect to db
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {

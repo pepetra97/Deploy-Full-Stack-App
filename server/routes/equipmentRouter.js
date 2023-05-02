@@ -5,6 +5,7 @@ const {
   createEquipment,
   deleteEquipment,
   updateEquipment,
+  updateHeight,
 } = require('../controllers/equipmentController');
 
 const router = express.Router();
@@ -23,5 +24,8 @@ router.delete('/equipment/delete/:id', deleteEquipment);
 
 // UPDATE a record
 router.patch('/equipment/update/:id', updateEquipment);
+
+//UPDATE height  of equipment
+router.patch('/equipment/height/:id', updateHeight);
 
 module.exports = router;

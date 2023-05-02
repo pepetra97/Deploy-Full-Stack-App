@@ -1,29 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Equipment = (props) => (
-  <tr>
-    <td>{props.equipment.name}</td>
-    <td>{props.equipment.type}</td>
-    <td>{props.equipment.amount}</td>
-    <td>
-      <Link className="btn btn-link" to={`/equipment-edit/${props.equipment._id}`}>
-        Edit
-      </Link>{' '}
-      |
-      <button
-        className="btn btn-link"
-        onClick={() => {
-          props.deleteEquipment(props.equipment._id);
-        }}>
-        Delete
-      </button>
-    </td>
-  </tr>
-);
+const Equipment = (props) => {
+  return (
+    <tr>
+      <td>{props.equipment.name}</td>
+      <td>{props.equipment.type}</td>
+      <td>{props.equipment.amount}</td>
+      <td>{props.equipment.height}</td>
+      <td>
+        <Link className="btn btn-link" to={`/equipment-edit/${props.equipment._id}`}>
+          Edit
+        </Link>{' '}
+        |
+        <button
+          className="btn btn-link"
+          onClick={() => {
+            props.deleteEquipment(props.equipment._id);
+          }}>
+          Delete
+        </button>
+      </td>
+    </tr>
+  );
+};
 
 export default function EquipmentList() {
   const [equipments, setEquipments] = useState([]);
+  const [height, setHeight] = useState(null);
 
   // This method fetches the equipments from the database.
   useEffect(() => {
@@ -38,12 +42,13 @@ export default function EquipmentList() {
 
       const equipments = await response.json();
       setEquipments(equipments);
+      console.log(equipments);
     }
 
     getEquipments();
 
     return;
-  }, [equipments.length]);
+  }, []);
 
   // This method will delete a equipment
   async function deleteEquipment(id) {
@@ -78,7 +83,6 @@ export default function EquipmentList() {
             <th>Name</th>
             <th>Type</th>
             <th>Amount</th>
-            <th>Action</th>
           </tr>
         </thead>
         <tbody>{equipmentList()}</tbody>

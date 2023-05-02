@@ -8,7 +8,7 @@ const Record = (props) => (
     <td>{props.record.middle_name}</td>
     <td>{props.record.position}</td>
     <td>{props.record.level}</td>
-    <td>{props.record.equipment}</td>
+    <td>{props.record.location}</td>
     <td>
       <Link className="btn btn-link" to={`/record-edit/${props.record._id}`}>
         Edit
@@ -21,6 +21,11 @@ const Record = (props) => (
         }}>
         Delete
       </button>
+      <button
+        onClick={() => props.checkSimilar(props.record.position, props.record.level)}>
+        Similar
+      </button>
+      |
     </td>
   </tr>
 );
@@ -47,7 +52,17 @@ export default function RecordList() {
     getRecords();
 
     return;
-  }, [records.length]);
+  }, []);
+
+  const checkSimilar = async (position, level) => {
+    const response = await fetch(
+      `http://localhost:5000/record/filtered/${position}/${level}`
+    );
+
+    const similarEmployees = await response.json();
+
+    setRecords(similarEmployees);
+  };
 
   // This method will delete a record
   async function deleteRecord(id) {
@@ -92,6 +107,7 @@ export default function RecordList() {
           record={record}
           deleteRecord={() => deleteRecord(record._id)}
           key={record._id}
+          checkSimilar={checkSimilar}
         />
       );
     });
@@ -123,7 +139,7 @@ export default function RecordList() {
                 }
                 placeholder="filter by level"></input>
             </th>
-            <th>Equipments: </th>
+            <th>Location</th>
             <th>Action</th>
           </tr>
         </thead>

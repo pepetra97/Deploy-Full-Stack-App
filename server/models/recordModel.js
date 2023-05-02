@@ -16,12 +16,15 @@ const recordSchema = new Schema(
       type: String,
       required: false,
     },
-    position: [],
+    position: {
+      type: String,
+      required: true,
+    },
     level: {
       type: String,
       required: true,
     },
-    equipment: { type: String },
+    location: [],
   },
   { timestamps: true }
 );

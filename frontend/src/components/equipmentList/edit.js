@@ -54,7 +54,7 @@ export default function Edit() {
       amount: form.amount,
     };
 
-    // This will send a patch request to update the data in the database.
+    // This will send a post request to update the data in the database.
     await fetch(`/equipment/update/${params.id}`, {
       method: 'PATCH',
       body: JSON.stringify(editedPerson),

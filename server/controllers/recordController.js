@@ -1,6 +1,5 @@
 const Record = require('../models/recordModel');
 const mongoose = require('mongoose');
-const Position = require('../models/positionsModel');
 
 // GET all Records
 const getRecords = async (req, res) => {
@@ -28,7 +27,7 @@ const getRecord = async (req, res) => {
 
 //CREATE new record
 const createRecord = async (req, res) => {
-  const { first_name, last_name, middle_name, position, level, equipment } = req.body;
+  const { first_name, last_name, middle_name, position, level, location } = req.body;
 
   // add doc to db
   try {
@@ -38,7 +37,7 @@ const createRecord = async (req, res) => {
       middle_name,
       position,
       level,
-      equipment,
+      location,
     });
     res.status(200).json(record);
   } catch (error) {
@@ -85,14 +84,12 @@ const updateRecord = async (req, res) => {
   res.status(200).json(record);
 };
 
-const getPositions = async (req, res) => {
-  const response = await Position.find({});
-
-  if (!response) {
-    res.status(404).json('not found');
-  }
-
-  return res.status(200).json(response);
+const filteredRecords = async (req, res) => {
+  const filteredEmployees = await Record.find({
+    position: req.params.positions,
+    level: req.params.level,
+  });
+  return res.status(200).json(filteredEmployees);
 };
 
 module.exports = {
@@ -101,5 +98,5 @@ module.exports = {
   createRecord,
   deleteRecord,
   updateRecord,
-  getPositions,
+  filteredRecords,
 };

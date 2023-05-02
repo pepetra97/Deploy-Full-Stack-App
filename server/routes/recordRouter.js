@@ -5,15 +5,13 @@ const {
   createRecord,
   deleteRecord,
   updateRecord,
-  getPositions,
+  filteredRecords,
 } = require('../controllers/recordController');
 
 const router = express.Router();
 
 // GET all records
 router.get('/record', getRecords);
-
-router.get('/record/positions', getPositions);
 
 // GET single records
 router.get('/record/:id', getRecord);
@@ -26,5 +24,8 @@ router.delete('/record/delete/:id', deleteRecord);
 
 // UPDATE a record
 router.patch('/record/update/:id', updateRecord);
+
+//Filter
+router.get('/record/filtered/:positions/:level', filteredRecords);
 
 module.exports = router;

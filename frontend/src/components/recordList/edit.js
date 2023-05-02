@@ -9,24 +9,22 @@ export default function Edit() {
     position: '',
     level: '',
     records: [],
-    equipment: [],
+    location: [],
   });
   const params = useParams();
   const navigate = useNavigate();
 
-  const [equipments, setEquipments] = useState([]);
+  const [locations, setLocations] = useState([]);
 
   useEffect(() => {
-    async function getEquipments() {
-      const response = await fetch('http://localhost:5000/equipment');
-      const json = await response.json();
-
-      setEquipments(json);
+    async function fetchLocation() {
+      const locations = await fetch('http://localhost:5000/locations');
+      const json = await locations.json();
+      console.log(json);
+      setLocations(json);
     }
 
-    getEquipments();
-
-    return;
+    fetchLocation();
   }, []);
 
   useEffect(() => {
@@ -56,27 +54,19 @@ export default function Edit() {
   }, [params.id, navigate]);
 
   // These methods will update the state properties.
-  function updateForm(value) {
-    return setForm((prev) => {
-      return { ...prev, ...value };
-    });
-  }
+  // function updateForm(value) {
+  //   return setForm((prev) => {
+  //     return { ...prev, ...value };
+  //   });
+  // }
 
   async function onSubmit(e) {
     e.preventDefault();
-    const editedPerson = {
-      first_name: form.first_name,
-      last_name: form.last_name,
-      middle_name: form.middle_name,
-      position: form.position,
-      level: form.level,
-      equipment: form.equipment,
-    };
 
     // This will send a post request to update the data in the database.
     await fetch(`/record/update/${params.id}`, {
       method: 'PATCH',
-      body: JSON.stringify(editedPerson),
+      body: JSON.stringify(form),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -97,7 +87,7 @@ export default function Edit() {
             className="form-control"
             id="first_name"
             value={form.first_name}
-            onChange={(e) => updateForm({ first_name: e.target.value })}
+            onChange={(e) => setForm({ ...form, first_name: e.target.value })}
           />
         </div>
         <div className="form-group">
@@ -107,7 +97,7 @@ export default function Edit() {
             className="form-control"
             id="last_name"
             value={form.last_name}
-            onChange={(e) => updateForm({ last_name: e.target.value })}
+            onChange={(e) => setForm({ ...form, last_name: e.target.value })}
           />
         </div>
         <div className="form-group">
@@ -117,7 +107,7 @@ export default function Edit() {
             className="form-control"
             id="middle_name"
             value={form.middle_name}
-            onChange={(e) => updateForm({ middle_name: e.target.value })}
+            onChange={(e) => setForm({ ...form, middle_name: e.target.value })}
           />
         </div>
         <div className="form-group">
@@ -127,7 +117,7 @@ export default function Edit() {
             className="form-control"
             id="position"
             value={form.position}
-            onChange={(e) => updateForm({ position: e.target.value })}
+            onChange={(e) => setForm({ ...form, position: e.target.value })}
           />
         </div>
         <div className="form-group">
@@ -139,7 +129,7 @@ export default function Edit() {
               id="positionIntern"
               value="Intern"
               checked={form.level === 'Intern'}
-              onChange={(e) => updateForm({ level: e.target.value })}
+              onChange={(e) => setForm({ ...form, level: e.target.value })}
             />
             <label htmlFor="positionIntern" className="form-check-label">
               Intern
@@ -153,7 +143,7 @@ export default function Edit() {
               id="positionJunior"
               value="Junior"
               checked={form.level === 'Junior'}
-              onChange={(e) => updateForm({ level: e.target.value })}
+              onChange={(e) => setForm({ ...form, level: e.target.value })}
             />
             <label htmlFor="positionJunior" className="form-check-label">
               Junior
@@ -167,25 +157,25 @@ export default function Edit() {
               id="positionSenior"
               value="Senior"
               checked={form.level === 'Senior'}
-              onChange={(e) => updateForm({ level: e.target.value })}
+              onChange={(e) => setForm({ ...form, level: e.target.value })}
             />
             <label htmlFor="positionSenior" className="form-check-label">
               Senior
             </label>
           </div>
+          <select onChange={(e) => setForm({ ...form, location: e.target.value })}>
+            <option></option>
+            {locations &&
+              locations.map((location) => {
+                return (
+                  <option key={location._id} value={location.country}>
+                    {location.country}
+                  </option>
+                );
+              })}
+          </select>
         </div>
         <br />
-        <select onChange={(e) => setForm({ ...form, equipment: e.target.value })}>
-          <option></option>
-          {equipments &&
-            equipments.map((equipment) => {
-              return (
-                <option key={equipment._id} value={equipment.name}>
-                  {equipment.name}
-                </option>
-              );
-            })}
-        </select>
 
         <div className="form-group">
           <input type="submit" value="Update Record" className="btn btn-primary" />

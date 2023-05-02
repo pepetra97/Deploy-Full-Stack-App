@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 export default function Create() {
-  const [positions, setPositions] = useState([]);
   const [form, setForm] = useState({
     first_name: '',
     last_name: '',
@@ -11,19 +10,6 @@ export default function Create() {
     level: '',
   });
   const navigate = useNavigate();
-
-  useEffect(() => {
-    async function getPositions() {
-      const positions = await fetch('http://localhost:5000/record/positions');
-
-      const json = await positions.json();
-
-      setPositions(json);
-      console.log(positions);
-    }
-
-    getPositions();
-  }, []);
 
   // These methods will update the state properties.
   function updateForm(value) {
@@ -90,22 +76,14 @@ export default function Create() {
           />
         </div>
         <div className="form-group">
-          {/* <label htmlFor="position">Position</label>
+          <label htmlFor="position">Position</label>
           <input
             type="text"
             className="form-control"
             id="position"
             value={form.position}
             onChange={(e) => updateForm({ position: e.target.value })}
-          /> */}
-          <select onChange={(e) => setForm({ ...form, position: e.target.value })}>
-            {form &&
-              form((position) => (
-                <option key={position._id} value={position.position}>
-                  {position.position}
-                </option>
-              ))}
-          </select>
+          />
         </div>
         <div className="form-group">
           <div className="form-check form-check-inline">

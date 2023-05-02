@@ -16,6 +16,7 @@ const equipmentSchema = new Schema(
       type: Number,
       required: true,
     },
+    height: { type: Number },
   },
   { timestamps: true }
 );
