@@ -20,11 +20,6 @@ const Record = (props) => (
         }}>
         Delete
       </button>
-      <button
-        onClick={() => props.checkSimilar(props.record.position, props.record.level)}>
-        Similar
-      </button>
-      |
     </td>
   </tr>
 );
@@ -52,16 +47,6 @@ export default function RecordList() {
 
     return;
   }, []);
-
-  const checkSimilar = async (position, level) => {
-    const response = await fetch(
-      `http://localhost:5000/record/filtered/${position}/${level}`
-    );
-
-    const similarEmployees = await response.json();
-
-    setRecords(similarEmployees);
-  };
 
   // This method will delete a record
   async function deleteRecord(id) {
@@ -106,7 +91,6 @@ export default function RecordList() {
           record={record}
           deleteRecord={() => deleteRecord(record._id)}
           key={record._id}
-          checkSimilar={checkSimilar}
         />
       );
     });
