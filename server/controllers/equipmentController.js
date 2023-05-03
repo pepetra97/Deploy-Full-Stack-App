@@ -77,24 +77,10 @@ const updateEquipment = async (req, res) => {
   res.status(200).json(equipment);
 };
 
-const updateHeight = async (req, res) => {
-  const { id } = req.params;
-  const update = { height: Math.floor(Math.random() * 10) };
-
-  try {
-    const response = await Equipment.updateOne({ _id: id }, { update });
-
-    return res.status(200).json(response);
-  } catch (error) {
-    return res.status(404).json({ error: error });
-  }
-};
-
 module.exports = {
   getEquipments,
   getEquipment,
   createEquipment,
   deleteEquipment,
   updateEquipment,
-  updateHeight,
 };

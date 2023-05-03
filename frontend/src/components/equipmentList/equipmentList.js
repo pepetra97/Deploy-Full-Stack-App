@@ -27,7 +27,6 @@ const Equipment = (props) => {
 
 export default function EquipmentList() {
   const [equipments, setEquipments] = useState([]);
-  const [height, setHeight] = useState(null);
 
   // This method fetches the equipments from the database.
   useEffect(() => {

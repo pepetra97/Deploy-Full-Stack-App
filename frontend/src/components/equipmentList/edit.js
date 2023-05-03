@@ -6,10 +6,9 @@ export default function Edit() {
     name: '',
     type: '',
     amount: '',
-    equipment: [],
   });
-  const params = useParams();
   const navigate = useNavigate();
+  const params = useParams();
 
   useEffect(() => {
     async function fetchData() {
@@ -35,19 +34,12 @@ export default function Edit() {
     }
 
     fetchData();
-
     return;
   }, [params.id, navigate]);
 
-  // These methods will update the state properties.
-  function updateForm(value) {
-    return setForm((prev) => {
-      return { ...prev, ...value };
-    });
-  }
-
   async function onSubmit(e) {
     e.preventDefault();
+
     const editedPerson = {
       name: form.name,
       type: form.type,
@@ -55,15 +47,22 @@ export default function Edit() {
     };
 
     // This will send a post request to update the data in the database.
-    await fetch(`/equipment/update/${params.id}`, {
+    await fetch(`http://localhost:5000/equipment/update/${params.id}`, {
       method: 'PATCH',
-      body: JSON.stringify(editedPerson),
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(editedPerson),
     });
 
     navigate('/');
+  }
+
+  // These methods will update the state properties.
+  function updateForm(value) {
+    return setForm((prev) => {
+      return { ...prev, ...value };
+    });
   }
 
   // This following section will display the form that takes input from the user to update the data.
