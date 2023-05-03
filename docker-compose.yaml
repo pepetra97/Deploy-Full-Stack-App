@@ -1,40 +1,29 @@
-version: '3'
-
+version: "3.9"
 services:
-  frontend:
+  client:
     build: ./frontend
-    container_name: react-ui
+    environment:
+      - REACT_APP_API_URL=http://server:5000
     ports:
       - "3000:3000"
-    stdin_open: true
-    tty: true
     depends_on:
-      - backend
-    networks:
-      - mern-network
-  
-  backend:
+      - server
+
+  server:
     build: ./server
-    container_name: node-api
-    restart: always
+    environment:
+      - MONGO_URI=mongodb://mongo-db:27017/EmployeesData
     ports:
       - "5000:5000"
     depends_on:
-      - database
-    networks:
-      - mern-network
+      - mongo-db
 
-  database:
+  mongo-db:
     image: mongo
-    container_name: mongo-db
     ports:
       - "27017:27017"
     volumes:
-      - /home/database/mongo-data:/data/db
-    networks:
-      - mern-network
+      - mongo-db-data:/data/db
 
-networks:
-  mern-network:
-    driver: bridge
-
+volumes:
+  mongo-db-data:

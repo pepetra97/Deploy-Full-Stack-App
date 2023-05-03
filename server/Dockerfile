@@ -1,19 +1,20 @@
-#  Dockerfile for Node Express Backend
-
+# Use an official Node runtime as a parent image
 FROM node:18-alpine
 
-# Create App Directory
-WORKDIR /app
+# Set the working directory
+WORKDIR /usr/src/app
 
-# Install Dependencies
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-RUN npm install 
+# Install any needed packages
+RUN npm install
 
-# Copy app source code
+# Copy the rest of the server-side application source code
 COPY . .
 
-# Exports
+# Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-CMD ["npm","start"]
+# Run the app when the container launches
+CMD ["npm", "start"]

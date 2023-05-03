@@ -1,20 +1,20 @@
-# Dockerfile for React client
-
-# Build react client
+# Use an official Node runtime as a parent image
 FROM node:18-alpine
 
-# Working directory be app
-WORKDIR /app
+# Set the working directory
+WORKDIR /usr/src/app
 
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-###  Installing dependencies
+# Install any needed packages
+RUN npm install
 
-RUN npm install 
-
-# copy local files to app folder
+# Copy the rest of the client-side application source code
 COPY . .
 
+# Make port 3000 available to the world outside this container
 EXPOSE 3000
 
-CMD ["npm","start"]
+# Run the app when the container launches
+CMD ["npm", "start"]
