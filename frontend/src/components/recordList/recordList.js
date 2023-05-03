@@ -8,7 +8,6 @@ const Record = (props) => (
     <td>{props.record.middle_name}</td>
     <td>{props.record.position}</td>
     <td>{props.record.level}</td>
-    <td>{props.record.location}</td>
     <td>
       <Link className="btn btn-link" to={`/record-edit/${props.record._id}`}>
         Edit
@@ -139,7 +138,6 @@ export default function RecordList() {
                 }
                 placeholder="filter by level"></input>
             </th>
-            <th>Location</th>
             <th>Action</th>
           </tr>
         </thead>

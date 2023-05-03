@@ -34,10 +34,15 @@ router.post('/equipment/add', async (req, res) => {
 
   // add doc to db
   try {
-    const equipment = await Equipment.create({ name, type, amount, height });
-    res.status(200).json(equipment);
+    const equipment = await Equipment.create({ 
+      name, 
+      type, 
+      amount, 
+      height 
+    });
+    return res.status(200).json(equipment);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 
@@ -49,7 +54,7 @@ router.delete('/equipment/delete/:id', async (req, res) => {
     return res.status(404).json({ error: 'No such equipment' });
   }
 
-  const equipment = await Equipment.findOneAndDelete({ _id: id });
+  const equipment = await Equipment.findByIdAndDelete({ _id: id });
 
   if (!equipment) {
     return res.status(404).json({ error: 'No such equipment' });

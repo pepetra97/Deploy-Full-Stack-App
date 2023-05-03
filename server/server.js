@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const recordRoutes = require('./routes/recordRouter');
 const equipmentRoutes = require('./routes/equipmentRouter');
 const rewardRoutes = require('./routes/rewardRoutes');
-const locationRouter = require('./routes/locationRouter');
 
 const cors = require('cors');
 
@@ -31,7 +30,6 @@ app.use((req, res, next) => {
 app.use('/', recordRoutes);
 app.use('/', equipmentRoutes);
 app.use('/', rewardRoutes);
-app.use('/', locationRouter);
 
 // connect to db
 mongoose

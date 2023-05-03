@@ -39,9 +39,9 @@ const createRecord = async (req, res) => {
       level,
       location,
     });
-    res.status(200).json(record);
+    return res.status(200).json(record);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };
 
@@ -53,13 +53,13 @@ const deleteRecord = async (req, res) => {
     return res.status(404).json({ error: 'No such record' });
   }
 
-  const record = await Record.findOneAndDelete({ _id: id });
+  const record = await Record.findByIdAndDelete({ _id: id });
 
   if (!record) {
     return res.status(404).json({ error: 'No such record' });
   }
 
-  res.status(200).json(record);
+  return res.status(200).json(record);
 };
 
 // UPDATE a Record
@@ -70,7 +70,7 @@ const updateRecord = async (req, res) => {
     return res.status(404).json({ error: 'No such record' });
   }
 
-  const record = await Record.findOneAndUpdate(
+  const record = await Record.findByIdAndUpdate(
     { _id: id },
     {
       ...req.body,
@@ -81,7 +81,7 @@ const updateRecord = async (req, res) => {
     return res.status(404).json({ error: 'No such record' });
   }
 
-  res.status(200).json(record);
+  return res.status(200).json(record);
 };
 
 const filteredRecords = async (req, res) => {

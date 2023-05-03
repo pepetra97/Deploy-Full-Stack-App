@@ -9,23 +9,9 @@ export default function Edit() {
     position: '',
     level: '',
     records: [],
-    location: [],
   });
   const params = useParams();
   const navigate = useNavigate();
-
-  const [locations, setLocations] = useState([]);
-
-  useEffect(() => {
-    async function fetchLocation() {
-      const locations = await fetch('http://localhost:5000/locations');
-      const json = await locations.json();
-      console.log(json);
-      setLocations(json);
-    }
-
-    fetchLocation();
-  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -163,17 +149,6 @@ export default function Edit() {
               Senior
             </label>
           </div>
-          <select onChange={(e) => setForm({ ...form, location: e.target.value })}>
-            <option></option>
-            {locations &&
-              locations.map((location) => {
-                return (
-                  <option key={location._id} value={location.country}>
-                    {location.country}
-                  </option>
-                );
-              })}
-          </select>
         </div>
         <br />
 
